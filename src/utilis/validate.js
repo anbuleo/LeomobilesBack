@@ -47,3 +47,21 @@ export const validate = async(req,res,next) => {
         next({statusCode:400,message:"No Token Found"})
     }
 }
+
+export const validateSentres = async(req,res,next) => {
+    let token = req.headers.authorization?.split(" ")[1]
+    // console.log(token)
+    if(token){
+        let payload = await decodeToken(token)
+        let currentTime = (+new Date())/1000
+
+        if(currentTime < payload.exp){
+           res.status(200).json({message:'verified'})
+        }else{
+              next({statusCode:400,message:'Token EXpried login again'})
+        }
+
+    }else {
+        next({statusCode:400,message:"No Token Found"})
+    }
+}

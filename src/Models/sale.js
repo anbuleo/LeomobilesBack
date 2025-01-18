@@ -20,7 +20,7 @@ const saleSchema = new mongoose.Schema({
             min: 1,
             default: 1,
           },
-          priceAtPurchase: {
+          sellingPrice: {
             type: Number, // Snapshot of the product's price at the time of purchase
             required: true,
           },
@@ -33,13 +33,9 @@ const saleSchema = new mongoose.Schema({
       totalPrice: {
         type: Number, // Computed sum of all products' totalProductPrice
         required: true,
-        min: 0,
+       
       },
-      paymentMethod: {
-        type: String,
-        enum: ['Credit Card', 'Debit Card', 'Cash', 'UPI', 'Wallet', 'Net Banking'],
-        required: true,
-      },
+      
       paymentStatus: {
         type: String,
         enum: ['Pending', 'Completed', 'Failed'],
@@ -64,6 +60,23 @@ const saleSchema = new mongoose.Schema({
         enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'],
         default: 'Processing',
       },
+      signature:{
+        type: String,
+        default:null
+      },
+      orderId:{
+        type:String,
+        default:null
+      },
+      paymentId:{
+        type:String,
+        default:null
+      },
+      refund:{
+        type:String,
+        default:false
+      }
+
 })
 
 const Sale = mongoose.model('sale',saleSchema)
